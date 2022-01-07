@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JS Drum Kit</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <!--  Notes  
+What is data-key? 
+Data attributes start with data-something
+This example we are using a -key, the data attribute is being using to link 
+the data-key to the data-key audio
+
+-->
 
 
   <div class="keys">
@@ -57,10 +66,65 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-<script>
+  <script>
+    window.addEventListener('keydown', function (e) {
+      /*console.log(e.keyCode);*/
+      const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+      const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+      /*console.log(audio);*/
+      if (!audio) return; //stops function from running all together
+      audio.currentTime = 0; //rewind to the start
+      audio.play();
+      key.classList.add('playing'); /*also have .remove, .toggle*/
+      /*console.log(key);*/
+    });
 
-</script>
+    function removeTransition(e) {
+      /* console.log(e); shows all transitions that ends, really only care about the one that takes the longest to end*/
+      if (e.propertyName !== 'transform') return; //skip if it's not a transform
+      console.log(e.propertyName);
+    }
+    16.06 timestamp
+
+
+
+    const keys = document.querySelectorAll('.key'); /*Listen for event called transition end on each one*/
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+
+    /*1. Listen for a key up event, grab the element that we are listening for | This instance is a window
+      2. Is there an element that is on the page that matches the data-key we want
+      3. Select the corresponding key that is with it to animate keydown buttons 
+      4. Use a transition end event that will remove styling class: listen for each key when the transition event end happens 
+    */
+    /* Break down logic of code WINDOW KEYDOWN
+         !!! Using attribute selector CSS |   "audio[data-key=65"
+         !!! ES6 standards |    back ticks (``), template literals `string text "${expression}" string text`
+         !!! Using (e) event to populate/listen for keycode  
+      
+      If no audio, end function with return
+
+      audio.play TROUBLESHOOT: notice that when you press a valid keydown, it won't play in succession 
+      so we need to make it so that we can using .currentTime
+   */
+
+    /* What is a click event?
+    When you click something it will fire off the event ans say, "somebody clicked me",
+    Also have events in JS that will say "I didn't get clicked but I was..transitioned "
+    */
+
+    /*Break down logic of code KEY TRANSITIONEND
+      !!!When you have an array of elements you must explicity loop over every single element and attach an event listener || We use forEach
+      !!!Listener we are listening for is 'transionedend'
+      !!!When that ends we are going to call a function called removeTransition
+      SIMPLIFIED !!!EACH key is getting an event listener called TRANSIONEND, when a transition ends we will remove it
+    */
+
+
+
+  </script>
 
 
 </body>
+
 </html>
