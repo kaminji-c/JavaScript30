@@ -67,7 +67,7 @@ the data-key to the data-key audio
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
   <script>
-    window.addEventListener('keydown', function (e) {
+    function playSound(e) {
       /*console.log(e.keyCode);*/
       const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
       const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
@@ -77,19 +77,20 @@ the data-key to the data-key audio
       audio.play();
       key.classList.add('playing'); /*also have .remove, .toggle*/
       /*console.log(key);*/
-    });
+    }
 
     function removeTransition(e) {
       /* console.log(e); shows all transitions that ends, really only care about the one that takes the longest to end*/
       if (e.propertyName !== 'transform') return; //skip if it's not a transform
-      console.log(e.propertyName);
+      /*  console.log(e.propertyName); */
+      /* console.log(this); */
+      this.classList.remove('playing');
     }
-    16.06 timestamp
-
-
 
     const keys = document.querySelectorAll('.key'); /*Listen for event called transition end on each one*/
     keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+    window.addEventListener('keydown', playSound);
 
 
     /*1. Listen for a key up event, grab the element that we are listening for | This instance is a window
@@ -120,6 +121,13 @@ the data-key to the data-key audio
       SIMPLIFIED !!!EACH key is getting an event listener called TRANSIONEND, when a transition ends we will remove it
     */
 
+    /* What does 'this' equal to?
+     It is equal to the key 
+     'This' is equal to whatever got called against it, so addEventListener got called, which is called against KEY
+     so THIS = KEY
+ 
+     Note: Wes bros is not a fan of adding a function to a event listener, he makes the function into its own block and then places the event listener at the bottom and calls the function to the event listener
+  */
 
 
   </script>
