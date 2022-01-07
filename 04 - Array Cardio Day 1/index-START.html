@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Array Cardio 💪</title>
 </head>
+
 <body>
   <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
   <script>
@@ -34,15 +36,40 @@
       'Berne, Eric', 'Berra, Yogi', 'Berry, Wendell', 'Bevan, Aneurin', 'Ben-Gurion, David', 'Bevel, Ken', 'Biden, Joseph', 'Bennington, Chester', 'Bierce, Ambrose',
       'Billings, Josh', 'Birrell, Augustine', 'Blair, Tony', 'Beecher, Henry', 'Biondo, Frank'
     ];
-    
+
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
 
+    /*   const fifteen = inventors.filter(function (inventor) {
+        if (inventor.year >= 1500 && inventor.year <= 1599) {
+          return true; //keep it
+        }
+      }); */
+
+    /*reduced code using arrow function: if both are true it will return a boolean of true*/
+    const fifteen = inventors.filter(inventor => inventor.year >= 1500 && inventor.year <= 1599);
+    /* console.log(fifteen); */
+    console.table(fifteen); /*super cool readable!!!*/
+
+
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    /* const fullName = inventors.map(inventor => inventor.first + ' ' + inventor.last); */
+    const fullName = inventors.map(inventor => `${inventor.first} ${inventor.last}`); /*use of template strings*/
+    console.log(fullName);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    /* const ordered = inventors.sort(function (a, b) {
+      if (a.year > b.year) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }); */
+    /*shorter code using the ternary operator */
+    const ordered = inventors.sort((a, b) => a.year > b.year ? 1 : -1);
+    console.table(ordered);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
@@ -58,8 +85,18 @@
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
 
+    /* ARRAY METHODS: Fundamentals of JS, force self to get good at filter, map, sort, reduce(array methods):
+    JS programming got better
+    Gate way drug to FUNCTIONAL PROGRAMMING */
+
+    /* FILTERS: Pass it a function that loops over the entire item of the array
+       MAPS: Take an array and does something with that array and returns a new array but of the same length
+       !!MAP will always give you the same amount of items you give it, think of it as a factory item that is stamped but still accounted for
+      SORT: Get two items, then you are asked to sort those 2 items. The way we sort is by returning 1 and -1.
+    */
   </script>
 </body>
+
 </html>
