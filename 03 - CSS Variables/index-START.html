@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Scoped CSS Variables and JS</title>
 </head>
+
 <body>
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
@@ -21,6 +23,22 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    /*CSS Variables: You declare them on some sort of element, in this case we are declaring it on 'root' which is the hightest lvl you can get it */
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--base);
+    }
 
     /*
       misc styles, nothing to do with CSS variables
@@ -43,9 +61,48 @@
       width: 100px;
     }
   </style>
+  <!-- Notes::
+    CSS variables can be updated with JS, when you update a variable in CSS, everywhere on the pg the variable is referenced it will update itself
+    vs. 
+    SASS you define them at compile time and then it gets complied and you cannot change it
+-->
+  <!-- LOGIC: CSS Variables and JS 
+    1. Create CSS Variables to play around with/reference to
+    2. Select all three inputs, so that when they change we can update the CSS variables
+    3. Create function to handle updates
+    4. Event listener for each of the inputs, using forEach, addEventListener to listen for 'change' event and mousemove event
+    5. Get values out of handleUpdate
+    Created a data-attribute in the html: data-sizing to correlate with the CSS variables 
+
+    Extra: can upgrade code by adding flags when you click set to true, when click off set to false 
+-->
 
   <script>
-  </script>
+    const inputs = document.querySelectorAll('.controls input');
+    /* console.log(inputs); */
 
+    function handleUpdate() {
+      const suffix = this.dataset.sizing || ''; /*or nothing to fall back onto, else will be undefined*/
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+      /* console.log(this.name); */
+      /* console.log(suffix); */
+      /* console.log(this.dataset); */
+      /*  console.log(this.value); */
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+
+  </script>
+  <!-- JS NOTES:  querySelectorAll returns a nodeList | it is NOT an ARRAY\
+  Difference between NODELIST and ARRAY
+  - Array has all kinds of methods dealing with an array like map and reduce
+  - Nodelist only has a couple methods like forEach, keys, values
+  - Some people convert their nodelist to arrays | may do in future videos, but this ex works for now
+
+  WHAT IS A DATASET?
+  Dataset is an object which contains data attributes from that specific element
+   -->
 </body>
+
 </html>
