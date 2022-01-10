@@ -73,28 +73,97 @@
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    const totalYears = inventors.reduce((total, inventor) => {
+      return total + (inventor.passed - inventor.year);
+    }, 0);
+
+    console.log(totalYears); /*when total is undefined so it returns [object Object]7859843780508967907681 in the console*/
 
     // 5. Sort the inventors by years lived
+    /* const oldest = inventors.sort(function (a, b) {
+     const lastGuy = a.passed - a.year;
+     const nextGuy = b.passed - b.year;
+     if (lastGuy > nextGuy) {
+       return -1;
+     } else {
+       return 1;
+     }
+    SAME AS THE IF STATEMENT return lastGuy > nextGuy ? 1 : -1; 
+   });*/
+
+    const oldest = inventors.sort(function (a, b) {
+      const lastGuy = a.passed - a.year;
+      const nextGuy = b.passed - b.year;
+      return lastGuy > nextGuy ? 1 : -1;
+    });
+    console.table(oldest);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    /* NOTE: You can call any query selector against any DOM element as shown below or you can call it at once L104-106 */
+    /*  const category = document.querySelector('.mw-category'); */
+    /*  const links = category.querySelectorAll('a'); */
+    /* const category = document.querySelector('.mw-category a'); */
+    /* const links = Array.from(category.querySelectorAll('a'));Conversion to ARRAY 1 */
+    /*  const links = [...category.querySelectorAll('a')]; Conversion to ARRAY 2, using ES6 spread */
+    /* textContent will give you whatever text is inside of it, rather than the entire link */
+    /*     const de = links
+          .map(link => link.textContent)
+          .filter(streetName => streetName.includes('de'));
+     */
+    /* FINAL CODE const category = document.querySelector('.mw-category');
+       const links = Array.from(category.querySelectorAll('a')); 
+       const de = links
+         .map(link => link.textContent)
+         .filter(streetName => streetName.includes('de'));
+    */
+    /*1st attempt unable to map because it is a NodeList, have to convert it to an array*/
+    /* WES likes putting different functions on their own line */
 
     // 7. sort Exercise
-    // Sort the people alphabetically by last name
+    // Sort the people alphabetically by last name * rather than returning an array, we destructure it and put it into their own variables
+    const alpha = people.sort((lastOne, nextOne) => {
+      const [aLast, aFirst] = lastOne.split(', ');
+      const [bLast, bFirst] = nextOne.split(', ');
+      return aLast > bLast ? 1 : -1;
+      /* console.log(aLast, aFirst); */
+    });
+    console.log(alpha);
 
     // 8. Reduce Exercise
-    // Sum up the instances of each of these
+    // Sum up the instances of each of these | A tally
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
+
+    const transportation = data.reduce(function (obj, item) {
+      /* console.log(item); */
+      if (!obj[item]) {
+        obj[item] = 0;
+      }
+      obj[item]++;
+      return obj;
+    }, {});
+    console.log(transportation);
+    /* start with a black object {}, instead of hard coding them
+    L 139 first we have to see if that item exist and if not initialize it */
 
     /* ARRAY METHODS: Fundamentals of JS, force self to get good at filter, map, sort, reduce(array methods):
     JS programming got better
     Gate way drug to FUNCTIONAL PROGRAMMING */
 
-    /* FILTERS: Pass it a function that loops over the entire item of the array
-       MAPS: Take an array and does something with that array and returns a new array but of the same length
-       !!MAP will always give you the same amount of items you give it, think of it as a factory item that is stamped but still accounted for
-      SORT: Get two items, then you are asked to sort those 2 items. The way we sort is by returning 1 and -1.
+    /* Reduce, sort, filter loops over every single item
+      * FILTERS: Pass it a function that loops over the entire item of the array
+      * MAPS: Take an array and does something with that array and returns a new array but of the same length
+        - !!MAP will always give you the same amount of items you give it, think of it as a factory item that is stamped but still accounted for
+      * SORT: Get two items, then you are asked to sort those 2 items. The way we sort is by returning 1 and -1.
+      * REDUCE: allows you to build something on every single item, Most flexible methods 
+       - What does REDUCE DO? Gives you a running total/what you returned from this function last time
+      * SPREAD [...] will take every item out of something, an iterable, which in this case is a nodelist and put it into a containing array
+      */
+
+    /* Problem 6 LOGIC:
+    1: Find out what contains the list of Boulevards
+    2. Then find the links within it
+    2a. Covert the list of links into a list of names, 2b: FILTER that list of names for only ones that include actual names
     */
   </script>
 </body>
