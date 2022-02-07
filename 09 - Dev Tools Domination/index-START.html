@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Console Tricks!</title>
 </head>
-<body>
 
+<body>
+  <!--   Notes: Don't know where the JS is running, what is making changes. 
+    - 1. You can inspect the element, find it in the DOM, right click Breaks on...
+            ...attribute modifications
+            ...node removal
+            ...subtree modification(change children properties) 
+         1a. After clicking it, it pops up a debugger command -- its a break point for us
+            ...it will pause exactly where the JS is
+            ...will show us the line of code that is causing that attribute change
+         1b. Can remove it by re-selecting element and taking it off 
+          -->
+
+  <!-- 1. Inspecting Javascript in the browser, and using breaks on to debug what causes changes to the attribute  -->
   <p onClick="makeGreen()">×BREAK×DOWN×</p>
 
   <script>
@@ -17,30 +30,81 @@
       p.style.fontSize = '50px';
     }
 
+    const s = "stupid";
+
+    /* CONSOLE.LOGS */
     // Regular
+    console.log('hello');
 
-    // Interpolated
+    // Interpolated, just use ES6 backticks
+    console.log('Hello I am with %s', 'stupido'); //interpolated
+    console.log(`Hello I am with ${s}`); //ES6 backticks
 
-    // Styled
+    // Styled,'%c' changes console fonts, bkg colors, color
+    /* console.log('%c I am some great text', 'font-size:50px; background: red; text-shadow: 10px 10px 0 blue'); */
 
     // warning!
+    console.warn('OH NOOOOO'); // will give a warning, tell us the stack trace as to where it was called
 
     // Error :|
+    console.error('Shit'); // display an error in the console, also give a stack trace, i.e. had a couple functions calling to get to that point
 
-    // Info
+    // Info, supposively gives you the i icon for info
+    console.info('Crocodiles eat 3-4 people per year');
 
-    // Testing
+    // Testing, check if things are true, will only fire if something is FALSE, no IF statement needed
+    const p = document.querySelector('p');
+    console.assert(1 === 2, 'That is wrong!');
+    console.assert(p.classList.contains('ouch'), 'That is wrong!');
 
-    // clearing
+    // clearing, clears console, can place it at the ending of the JS file
+    console.clear();
 
     // Viewing DOM Elements
+    console.log(p); //will only show you the actual element itself
+    console.dir(p); //gives dropdown to see all properties/methods applicable to this element
 
-    // Grouping together
+    console.clear();
+    // Grouping together, SUPER COOL, SUPER HELPFUL
+    dogs.forEach(dog => {
+      console.groupCollapsed(`${dog.name}`); //collapses groups
+      /*  console.group(`${dog.name}`); */ //dropdown groups active
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+      console.groupEnd(`${dog.name}`);
+    });
 
-    // counting
 
-    // timing
+    // counting, 
+    /* ...how many times you use a specific word 
+       ...number, object, or DOM node, ...
+    */
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Wes');
+    console.count('Wes');
+    console.count('Wes');
+
+    // timing, see how long something takes || also have performance.now in the browser, good tool to see how long things are taking
+    console.time('fetching data');
+    fetch('https://api.github.com/users/wesbos')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetching data');
+        console.log(data);
+      });
+
+    console.table(dogs);
 
   </script>
 </body>
+
 </html>
