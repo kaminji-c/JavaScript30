@@ -97,26 +97,40 @@
   </div>
 
   <script>
-    /*create a flag*/
-    const checked = false;
+    /*  Logic: 1st thing is select all the boxes when checked  */
+    const checkboxes = document.querySelectorAll('.inbox input[type=checkbox]');
+    console.log(checkboxes);
+    /*  const checkBox = document.querySelectorAll('input[type=checkbox]');*/
 
-    const checkItem = document.querySelector(`.item input[type=checkbox]`); //returns details on checkbox
-    const checkBox = document.querySelectorAll('input[type=checkbox]'); //returns nodelist
+    /* Now listen for when one of them gets clicked */
+    /*   checkboxes.addEventListener('change', function () {
+        alert("this button changed");
+      }); */
+    function handleCheck(e) {
+      console.log(e);
+    }
+    checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+    //WES initially used the 'change' event but the 'click' event will listen from a change from the keyboard!!!
 
-    checkBox.addEventListener('change', function () {
-      if (checkBox.checked) {
-        console.log("Checkbox is checked");
-      } else {
-        console.log('No checkbox selected');
-      }
-    });
+    /*  keys.forEach(key => key.addEventListener('transitionend', removeTransition)); */
+    /*   const checkItem = document.querySelector(`.item input[type=checkbox]`); */ //returns details on checkbox
 
-    checkBox.forEach(function (checked, index) {
-      if (checked === false) {
-        console.log('No items selected');
-      }
-      console.log(index);
-    })
+    //returns nodelist
+
+    /*  checkBox.addEventListener('change', function () {
+       if (checkBox.checked) {
+         console.log("Checkbox is checked");
+       } else {
+         console.log('No checkbox selected');
+       }
+     });
+ 
+     checkBox.forEach(function (checked, index) {
+       if (checked === false) {
+         console.log('No items selected');
+       }
+       console.log(index);
+     }) */
 
     /*  function checkMe() {
        if (checkBox === true) {
