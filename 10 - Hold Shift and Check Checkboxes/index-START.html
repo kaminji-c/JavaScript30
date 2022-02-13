@@ -106,13 +106,41 @@
     /*   checkboxes.addEventListener('change', function () {
         alert("this button changed");
       }); */
+
+    /*For Shift to work we have to remember where a variable starts/ends*/
+    let lastChecked; //using let because it will be reassigned constantly
+
     function handleCheck(e) {
-      console.log(e);
+      //Check if they had shift key down
+      //AND check that they are checking it
+      let inBetween = false;
+      if (e.shiftKey && this.checked) {
+        //do what we please by LOOPING, looking for the 1st one that is checked
+        //loop over every single checkbox
+        checkboxes.forEach(checkbox => {
+          console.log(checkbox);
+          if (checkbox === this || checkbox === lastChecked) {
+            /*  inBetween = true;  normally = to true but because we want to go both ways we say it is opposite of its self*/
+            inBetween = !inBetween;
+            console.log('Starting to check them inbetween');
+          }
+          if (inBetween) {
+            checkbox.checked = true;
+          }
+
+        });
+      }
+
+      lastChecked = this;
+      /*  console.log(e); */
     }
     checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
     //WES initially used the 'change' event but the 'click' event will listen from a change from the keyboard!!!
 
-    /*  keys.forEach(key => key.addEventListener('transitionend', removeTransition)); */
+
+
+
+
     /*   const checkItem = document.querySelector(`.item input[type=checkbox]`); */ //returns details on checkbox
 
     //returns nodelist
